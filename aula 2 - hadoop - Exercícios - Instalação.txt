@@ -1,0 +1,66 @@
+
+aula 2 - hadoop - Exercícios - Instalação
+
+
+1. Instalação do docker e docker-compose
+
+    Docker: https://docs.docker.com/get-docker/ (Links para um site externo.)
+	FEITO!
+
+    Docker-compose: https://docs.docker.com/compose/install/ (Links para um site externo.)
+	FEITO
+
+2. Executar os seguintes comandos, para baixar as imagens do Cluster de Big Data:
+
+    git clone https://github.com/rodrigo-reboucas/docker-bigdata.git - FEITO
+    cd docker-bigdata - FEITO
+    docker-compose pull - FEITO
+	
+3. Iniciar o cluster Hadoop através do docker-compose
+
+    docker-compose up -d - FEITO
+
+4. Listas os containers em execução
+
+maoshie@DESKTOP-343S2AC:~/docker-bigdata$ docker ps
+CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS                    PORTS                                                                NAMES
+97e20cd81aec   fjardim/hive             "entrypoint.sh /bin/…"   48 minutes ago   Up 33 minutes             0.0.0.0:10000->10000/tcp, 10002/tcp                                  hive-server
+b99a169e02cf   fjardim/hive             "entrypoint.sh /opt/…"   48 minutes ago   Up 33 minutes             10000/tcp, 0.0.0.0:9083->9083/tcp, 10002/tcp                         hive_metastore
+c6e37d77b613   fjardim/hive-metastore   "/docker-entrypoint.…"   48 minutes ago   Up 33 minutes             5432/tcp                                                             hive-metastore-postgresql
+249ecc4b591f   fjardim/datanode         "/entrypoint.sh /run…"   48 minutes ago   Up 33 minutes (healthy)   0.0.0.0:50075->50075/tcp                                             datanode
+e0f727525001   fjardim/hbase-master     "/entrypoint.sh /run…"   48 minutes ago   Up 33 minutes             16000/tcp, 0.0.0.0:16010->16010/tcp                                  hbase-master
+df885d437094   fjardim/namenode_sqoop   "/entrypoint.sh /run…"   48 minutes ago   Up 33 minutes (healthy)   0.0.0.0:50070->50070/tcp                                             namenode
+cfbea8307e88   fjardim/mysql            "docker-entrypoint.s…"   48 minutes ago   Up 33 minutes             33060/tcp, 0.0.0.0:33061->3306/tcp                                   database
+1ebc9da7e223   fjardim/zookeeper        "/bin/sh -c '/usr/sb…"   48 minutes ago   Up 33 minutes             22/tcp, 2888/tcp, 3888/tcp, 0.0.0.0:2181->2181/tcp                   zookeeper
+990900ba4009   fjardim/jupyter-spark    "/opt/docker/bin/ent…"   48 minutes ago   Up 33 minutes             0.0.0.0:4040-4043->4040-4043/tcp, 0.0.0.0:8889->8889/tcp, 8899/tcp   spark
+
+5. Verificar os logs dos containers do docker-compose em execução
+	docker-compose logs - FEITO
+
+6. Verificar os logs do container namenode
+	docker logs namenode
+
+7.  Acessar o container namenode
+maoshie@DESKTOP-343S2AC:~/docker-bigdata$ docker exec -it namenode bash
+root@namenode:/#
+
+
+8. Listar  os diretórios do container namenode
+root@namenode:/# ls -l
+total 148
+
+9. Parar os containers do Cluster de Big Data
+maoshie@DESKTOP-343S2AC:~/docker-bigdata$ docker-compose stop
+Stopping hive-server               ... done
+Stopping hive_metastore            ... done
+Stopping hive-metastore-postgresql ... done
+Stopping datanode                  ... done
+Stopping hbase-master              ... done
+Stopping namenode                  ... done
+Stopping database                  ... done
+Stopping zookeeper                 ... done
+Stopping spark                     ... done
+maoshie@DESKTOP-343S2AC:~/docker-bigdata$
+
+
+
