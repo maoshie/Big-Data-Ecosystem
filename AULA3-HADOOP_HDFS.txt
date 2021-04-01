@@ -1,0 +1,201 @@
+
+
+* AULA 3 - HADOOP(HDFS)
+* COMANDOS HDFS 
+
+------------------------------------------------------------------------------
+#para acesso ao HADOOP HDFS
+
+#acessar o namenode;
+$ docker exec -it namenode bash
+
+namenode# $hdfs dfs 
+
+------------------------------------------------------------------------------
+- COMANDOS HELP
+
+$ hadoop fs help
+$ hdfs dfs help
+$ hdfs dfs help ls
+
+------------------------------------------------------------------------------
+# COMANDOS DIRETORIOS
+
+#Criar diretório
+mkdir <diretorio>
+
+
+#Criar estrutura de diretórios
+mkdir -p <diretório>/<diretório>/<diretório>
+
+
+#Listar diretório
+ls <diretorio>
+	Recursivo: -R  --> abre todos.
+	
+
+#Remoção arquivos e diretórios
+ -rm <src>
+	Argumentos
+	-r: Deletar diretório
+	-skipTrash : Remover permanentemente
+
+------------------------------------------------------------------------------
+
+* ENVIAR ARQUIVOS *
+
+* LOCAL/HDFS *
+
+#Enviar arquivo ou diretório
+ -put origem > destino > (mais usado)
+	Argumentos:
+	-f: Sobrescreve o destino, se já existir.
+	-l: Força um fator de replicação de
+ copyFromLocal <src> <dst>	
+
+
+#Mover arquivo ou diretório
+	Put > que deleta do local
+	moveFromLocal <src> <dst>
+
+#Receber arquivo ou diretório
+ get <entrada> <destino>
+	Argumentos -f
+
+#Cria um único arquivo mesclado
+getmerge <src> <dst>	
+
+
+#Mover para o local
+Get que deleta a cópia do HDFS
+moveToLocal <src> <localdst>
+
+
+------------------------------------------------------------------------------
+
+* HDFS/HDFS *
+
+#SÓ É PERMITIDO DENTRO DO HDFS
+#Copiar arquivo ou diretório
+cp entrada > destino
+	argumento =f
+
+
+#SÓ É PERMITIDO DENTRO DO HDFS
+#Mover arquivo ou diretório
+mv entrada > destino
+mv <arquivo1> <arquivo2> <arquivo3> dst
+
+#Não é permitido copiar ou mover arquivos entre sistemas de arquivos
+
+------------------------------------------------------------------------------
+
+* Comandos de Arquivos *
+
+
+#Mostrar o uso do disco
+ -du -h <diretório>
+
+#Exibir o espaço livre
+ -df -h <diretório>
+
+#Mostrar as informações do diretório
+
+ -stat <dir>
+	hdfs dfs stat %r name.txt #fator de replicação
+	hdfs dfs stat %o name.txt #tamanho do bloco
+
+#Contar o número de diretórios, número de arquivos e tamanho do arquivo especificado
+count -h <diretório>
+
+#Esvaziar a lixeira
+expunge
+
+
+#Ver conteúdo do arquivo
+ cat <arquivo>
+
+#Alterar o fator de replicação do arquivo
+ -setrep <nº repetições> <arq>
+
+#Criar um arquivo de registro com data e hora
+ -touchz <dir>
+
+#Retornar as informações da soma de verificação de um arquivo
+ -checksum <arq>
+
+
+#Mostra o último 1KB do arquivo no console:
+ -tail [-f] <arquivo>
+	hdfs dfs -tail name.txt  #final do aquivo;
+
+
+#Verificar apenas a 1 linha;
+hdfs dfs -cat name.txt | head -n 1  
+
+
+
+#Localiza todos os arquivos que correspondem à expressão
+
+find <caminho> <procura> print
+
+Exemplos:
+	hdfs dfs -find / -name data  #case sensitive
+
+	hdfs dfs -find / -iname Data -print  #Não é case sensitive
+	R: /user semantix /input/data
+
+	hdfs dfs find input/ -name \*.txt -print
+	R: input/teste1.txt, input/teste2.txt
+
+
+------------------------------------------------------------------------------
+
+# Não esqueça que no namenode, temos 2 sistemas de arquivos para listar:
+
+Local: ls /
+HDFS: hdfs dfs -ls /
+
+#LOCAL:
+/home
+
+#HDFS:
+root@namenode:/home# hdfs dfs -ls /user/hive/warehouse  ==>  namenode -> HDFS  
+root@namenode:/home# hdfs dfs -ls /user/aluno/maoshie/  ==>  namenode -> HDFS
+
+
+------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------
