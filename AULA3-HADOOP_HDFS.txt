@@ -44,6 +44,7 @@ ls <diretorio>
 
 * ENVIAR ARQUIVOS *
 
+* (namenode) put --> (hdfs)
 * LOCAL/HDFS *
 
 #Enviar arquivo ou diretório
@@ -58,17 +59,24 @@ ls <diretorio>
 	Put > que deleta do local
 	moveFromLocal <src> <dst>
 
+----------------------------------------
+
+* RECEBER ARQUIVO *
+
+* (hdfs)get --> (namenode)
+* HDFS/LOCAL
+
 #Receber arquivo ou diretório
  get <entrada> <destino>
 	Argumentos -f
 
 #Cria um único arquivo mesclado
-getmerge <src> <dst>	
+getmerge <src> <dst>		
 
 
 #Mover para o local
 Get que deleta a cópia do HDFS
-moveToLocal <src> <localdst>
+	> moveToLocal <src> <localdst>
 
 
 ------------------------------------------------------------------------------
@@ -94,7 +102,7 @@ mv <arquivo1> <arquivo2> <arquivo3> dst
 
 
 #Mostrar o uso do disco
- -du -h <diretório>
+ du -h <diretório>
 
 #Exibir o espaço livre
  -df -h <diretório>
