@@ -1,0 +1,87 @@
+
+* AULA 2 - HADOOP *
+
+
+* INSTALAÇÃO *
+
+- baixar o Docker:
+https://hub.docker.com/editions/community/docker-ce-desktop-windows/
+
+- baixar e instalar o WSL2:
+https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
+
+
+- Abrir o POWERSHEL (ADM)
+- Rodar -> wsl --set-default-version 2
+
+- Verificar a versão WSL - Ubuntu
+PS C:\Windows\system32> wsl -l -v
+  NAME            STATE           VERSION
+* Ubuntu-20.04    Running         2
+
+----------------------------------------------------------------------------------------
+
+- BAIXAR O CONTEUDO DO CLUSTER
+
+$ sudo git clone https://github.com/rodrigo-reboucas/exercises-data.git
+
+
+#1 - Baixar as imagens
+docker-compose pull
+
+#2 - Listar as imagens para verificar
+docker image ls
+
+#3 - Iniciar todos os serviços em background (-d)
+$ docker-compose up -d
+
+# Parar os serviços
+$ docker-compose stop
+
+# Iniciar os serviços
+$ docker-compose start
+
+
+* TERMINO DOS ESTUDOS *
+
+#Matar os serviços
+$ docker-compose dowm
+•
+#Apagar todos os volumes sem uso
+$ docker volume prune
+
+#Apagar tudo (image, volume, network)
+$ docker system prune-all
+
+#Visualizar os container
+
+- Ativos / Todos
+$ docker ps
+
+
+----------------------------------------------------------------------------------------
+- Executar comandos no container
+$ docker exec it <container> <comando>
+
+- CONTAINER
+	- namenode bash
+	- spark bash
+	- hive-server bash
+	- hbase-master bash
+	- 
+----------------------------------------------------------------------------------------
+- VISUALIZAR OS LOGS
+
+$ docker logs <container>
+
+$ docker compose logs	
+
+----------------------------------------------------------------------------------------
+
+ENVIAR ARQUIVO
+$ docker cp <diretório> <container>:/<
+
+----------------------------------------------------------------------------------------
+
+- HELP DE COMANDOS
+$docker --help
