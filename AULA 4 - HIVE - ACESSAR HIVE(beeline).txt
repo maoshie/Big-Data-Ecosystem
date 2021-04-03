@@ -1,0 +1,48 @@
+
+* AULA 4 - HIVE-ACESSO beeline *
+
+#HELP
+
+beeline --help
+
+#ACESSO AO HIVE:
+docker exec -it hive-server bash
+root@hive_server:/opt#
+
+
+#ACESSO AO BEELINE:
+$ beeline -u jdbc:hive2://localhost:10000 
+0: jdbc:hive2://localhost:10000>
+
+
+# ACESO AO BEELINE USANDO AUTENTICAÇÃO;
+$ beeline -u jdbc:hive2://localhost:10000 --username root --password secret 
+
+---------------------------------------------------------------------------
+
+# listar BD do hive(beeline)
+0: jdbc:hive2://localhost:10000> show databases;
++----------------+
+| database_name  |
++----------------+
+| default        |
++----------------+
+1 row selected (0.708 seconds)
+
+---------------------------------------------------------------------------
+
+# listar tabelas:
+0: jdbc:hive2://localhost:10000> show tables;
++-----------+
+| tab_name  |
++-----------+
++-----------+
+No rows selected (0.099 seconds)
+
+---------------------------------------------------------------------------
+
+
+
+
+
+---------------------------------------------------------------------------

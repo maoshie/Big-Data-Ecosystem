@@ -1,0 +1,237 @@
+
+* AULA - HIVE * 
+
+* Criação de Banco de Dados e Tabelas * 
+
+* Banco de dados e tabelas
+
+-----------------------------------------------------------------------
+#Listar todos os BD
+show database;
+
+
+#Estrutura sobre o bd
+desc database <nomeBD>;
+
+
+#Listar as tabelas
+show tables;
+
+
+# Descrição da tabela
+desc <nomeTabela>;
+desc formatted <nomeTabela>;
+desc extended <nomeTabela>;
+
+
+#Criar BD
+create database <nomeBanco>;
+
+
+#Local diferente do conf. Hive
+create database <nomeBanco> location “/diretorio”;
+
+
+#Adicionar comentário
+ create database <nomeBanco> comment “descrição”;
+ comment "descrição"
+
+#Ex					local(namenode)
+- create database test location “/user/hive/warehouse/test” comment “banco de dados para
+  treinamento”
+
+- default
+  local(namenode) /user/hive/warehouse/test.db
+
+-----------------------------------------------------------------------
+
+#Tabela interna
+ create table user(cod int, name string);
+
+#Apaga os dados e metadados
+ drop table 
+
+-----------------------------------------------------------------------
+
+#Tabela externa							(local_origem)
+create external table e_user(cod int, name string) location '/user/semantix/data_users';
+
+create external table takashi(cod int, namoe string) location '/user/hive/warehouse/maoshie';
+
+#drop table
+- Apaga apenas os dados da tabela externa;
+- Usar para compartilhar os dados com outras ferramentas
+- Apaga apenas os metadados
+- Dados ficam armazenado no sistema de arquivos
+
+-----------------------------------------------------------------------
+* Tipos Dados Complexos *
+
+#ARRAY
+- Lista de Elementos [‘Seg’, ‘Ter’, ‘Qua’, ‘Qui’, ‘Sex’]
+
+#MAP
+- Tipo Chave-valor ‘nome’ --> 'Marcio'
+
+#STRUCT
+- Define os campos dos seus tipos de dados
+ STRUCT<col_name
+ :data_type,
+
+#UNION
+- Armazenar diferentes tipos de dados no mesmo local de memória
+  UNIONTYPE<data_type,
+  data_type, ...>
+
+
+-----------------------------------------------------------------------
+* OPÇÕES DE LEITURAS *
+
+#Definir delimitadores
+
+ row format delimited
+ fields terminated by ‘< delimitador >'
+ lines terminated by ‘< delimitador>
+ Delimitadores: ‘qualquer coisa’, \b (backspace), \n (newline), \t (tab)
+
+-------------------------
+
+#Pular um número de linhas de leitura do arquivo com cabeçalho.
+ tblproperties("skip.header.line.count"=“<número de linhas");
+
+
+#Definir Localização dos dados quando externo.(Tabela externa)
+ location '/user/cloudera/data/client’;
+
+-----------------------------------------------------------------------
+* EXEMPLO CRIAÇÃO DE TABELAS *
+
+#TABELA EXTERNA
+
+create external table user(
+	id int,
+	name string,
+	age int
+)
+row format delimited
+fields terminated by '\t'
+lines terminated by '\n'
+stored as textfile # -> armazena em .txt
+Delimitadores: ‘qualquer coisa’, b (backspace), n (newline), t (tab)
+
+
+-----------------------------------------------------------------------
+
+* INSERÇÃO DE DADOS *
+
+#Inserir dados
+
+ insert into table <nomeTabela> partition(<partition>=’<value>’) values(<campo>,<value>),
+ (<campo>,<value>);
+
+#EX:
+
+ insert into users values(10, ‘Rodrigo’),(11,’Augusto’);
+ insert into users partition(data=now()) values(10, ‘Rodrigo’),(11,’Augusto’);
+ insert into users select * from cliente;
+
+
+#Carregar dados no sistema de arquivos local
+# hdfs -> hive
+
+hive> load data inpath <diretório> into table <nomeTabela>;
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,67 @@
+
+* AULA 4 - HIVE
+
+* ANALISE DE DADOS
+
+- Hive
+- impala
+- Presto
+- Spark
+
+- Comandos SQL
+- Jobs MapReduce
+- Dados são armazenandos no HDFS
+- Não é usada para fornecer respostas em tempo real (Impala)
+
+* COMPONENTES *
+
+# HCatalog
+- Camada de gerenciamento de armazenamento para o Hadoop
+- Permite que usuários com diferentes ferramentas de processamento de dados leiam e gravem os
+dados
+
+
+# HiveServer2 (HS2)
+- Serviço que permite aos clientes executar consultas no Hive
+
+
+# Metastore
+- Todos os metadados das tabelas e partições do Hive são acessados através do Hive Metastore
+- Existem diferentes maneiras de configurar o servidor metastore
+	Embedded Metastore
+	Local Metastore
+	Remote Metastore
+	
+# Beeline
+- Cliente Hive
+- Faz uso de JDBC para se conectar ao HiveServer2
+
+
+* FORMATO DE ARQUIVO *
+
+# Não existe um formato Hive
+
+# Conector para vários formatos
+- Arquivos de texto com valores separados por vírgula e tabulação (CSV / TSV)
+- Parquet
+- ORC
+- AVRO
+- JSONFILE
+- Outros ...
+
+# ESTRUTURA
+ Database
+   table
+     Partition = Coluna de armazenamento dos dados no sistema de arquivos.
+	 bucket = Dados são divididos em uma coluna através de Hash.
+
+
+# Exemplo de caminho
+ /user/hive/warehouse/banco.db/tabela/data=010119/000000_0
+
+ 
+
+* LINGUAGEM HIVE *
+- Hive Query Language
+- HiveQL
+- HQL

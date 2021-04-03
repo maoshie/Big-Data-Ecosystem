@@ -1,0 +1,57 @@
+
+* AULA 4 - HIVE - Manipulação de Dados *
+
+-----------------------------------------------------------------------
+
+* INSERÇÃO DE DADOS *
+
+#Inserir dados
+
+ insert into table <nomeTabela> partition(<partition>=’<value>’) 
+values(<campo>,<value>), (<campo>,<value>);
+
+#EX:
+
+ insert into users values(10, ‘Rodrigo’),(11,’Augusto’);
+ insert into users partition(data=now()) values(10, ‘Rodrigo’),(11,’Augusto’);
+ insert into users select * from cliente;
+
+
+#Carregar dados no sistema de arquivos local
+
+ #hive> fazer no hive: beeline
+ load data inpath <local/hdfs> into table <beeline:pop>;
+
+
+#carregar arquivos local(namenode): /home/cloudera/data/test... para hive.
+
+#namenode:
+ load data local inpath ‘/home/cloudera/data/test ’ into table alunos
+
+#hdfs
+ load data inpath '/user/cloudera/data/test’ overwrite into table alunos partition(id)
+
+ overwrite = substituir
+ 
+ 
+-----------------------------------------------------------------------
+# JOIN
+
+select * from a join b on a.valor=b.valor
+
+-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
