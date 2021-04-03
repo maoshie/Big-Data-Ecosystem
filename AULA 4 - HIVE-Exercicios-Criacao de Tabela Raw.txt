@@ -1,0 +1,95 @@
+
+* AULA 4 - HIVE - Exercícios - Criação de Tabela Raw *
+
+
+1. Enviar o arquivo local “/input/exercises-data/populacaoLA/populacaoLA.csv” 
+   para o diretório no HDFS “/user/aluno/maoshie/data/populacao”
+
+root@namenode:/# hdfs dfs -ls /user/aluno/maoshie/data/populacao
+Found 1 items
+-rw-r--r-- 3 root supergroup 12183 2021-04-03 18:39 /user/aluno/maoshie/data/populacao/populacaoLA.csv
+
+-----------------------------------------------------------------------------
+2. Listar os bancos de dados no Hive
+
+0: jdbc:hive2://localhost:10000> show databases;
++----------------+
+| database_name  |
++----------------+
+| default        |
++----------------+
+1 row selected (0.158 seconds)
+
+-----------------------------------------------------------------------------
+3. Criar o banco de dados maoshie
+
+0: jdbc:hive2://localhost:10000> show databases;
++----------------+
+| database_name  |
++----------------+
+| default        |
+| maoshie        |
++----------------+
+2 rows selected (0.044 seconds)
+
+-----------------------------------------------------------------------------
+
+4. Criar a Tabela Hive no BD maoshie
+
+    Tabela interna: pop
+    Campos:
+zip_code int,
+total_population int,
+median_age float,
+total_males int,
+total_females int,
+total_households int,
+average_household_size float
+
+    Propriedades
+        Delimitadores: Campo ‘,’ | Linha ‘\n’
+        Sem Partição
+        Tipo do arquivo: Texto
+        tblproperties("skip.header.line.count"="1")’
+
+-----------------------------------------------------------------------------
+5. Visualizar a descrição da tabela pop
+
+0: jdbc:hive2://localhost:10000> desc pop;
++-------------------------+------------+----------+
+|        col_name         | data_type  | comment  |
++-------------------------+------------+----------+
+| zip_code                | int        |          |
+| total_population        | int        |          |
+| median_age              | float      |          |
+| total_males             | int        |          |
+| total_females           | int        |          |
+| total_households        | int        |          |
+| average_household_size  | float      |          |
++-------------------------+------------+----------+
+7 rows selected (0.192 seconds)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
