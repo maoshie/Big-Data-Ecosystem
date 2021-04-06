@@ -1,0 +1,106 @@
+
+* AULA 6 - HIVE - Formato de Arquivos e Compressão *
+
+#Adicionar o parâmetro stored na criação da tabela
+
+#stored as <formatoArquivo>
+
+- TEXTFILE (Padrão)
+- SEQUENCEFILE
+- RCFILE
+- ORC (Hortonworks)
+- PARQUET (Cloudera)
+- AVRO
+- JSONFILE
+
+-----------------------------------------------------------------
+
+#PARQUET
+
+#Formato colunar
+- Formado por grupos de colunas
+
+#Vantagem
+- Suporta MapReduce
+- Pig
+- Hive
+- Java
+
+
+#processamento
+- Impala
+- SparK
+
+#Suporta evolução do esquema
+- Hive
+- Impala
+
+-----------------------------------------------------------------
+# Compressão  DE DADOS;
+
+#Armazenamento x Velocidade de leitura
+
+#ZLIB ( GZip
+	Alta compressão, lento
+
+#Snappy
+	Baixa compressão, rápido
+
+-----------------------------------------------------------------
+
+# Tipos de Compressão para Salvar
+
+#SE O ARQUIVO MAPRED SITE.XML NÃO ESTIVER CONFIGURADO PODE SETAR MANUALMENTE
+
+- hive> SET hive.exec.compress.output=true;
+
+- hive> SET mapred.output.compression.codec= codec
+
+- hive> SET mapred.output.compression.type=BLOCK;
+
+
+
+#Codec:
+
+- gzip: org.apache.hadoop.io.compress.GzipCodec
+
+- bzip2: org.apache.hadoop.io.compress.BZip2Codec
+
+- LZO: com.hadoop.compression.lzo.LzopCodec
+
+- Snappy: org.apache.hadoop.io.compress.SnappyCodec
+
+- Deflate: org.apache.hadoop.io.compress.DeflateCodec
+
+
+#Adicionar o parâmetro compress em tblproperties na criação da tabela
+
+  
+
+ GZIP - gzip: org.apache.hadoop.io.compress.GzipCodec
+ BZIP2 - bzip2: org.apache.hadoop.io.compress.BZip2Codec
+ LZO - LZO: com.hadoop.compression.lzo.LzopCode
+ SNAPPY - Snappy: org.apache.hadoop.io.compress.SnappyCodec
+ DEFLATE - Deflate: org.apache.hadoop.io.compress.DeflateCodec
+
+EX:
+stored as parquet 
+tblproperties('parquet.compress'='SNAPPY') 
+
+-----------------------------------------------------------------
+
+#EXEMPLO CRIAÇÃO DE TABELA COM PARTIÇÃO E Compressão:
+
+ create table user(
+	id int,
+	name string,
+	age int
+	)
+partitioned by (data string)
+clustered by(id) into 256 buckets
+stored as parquet 
+tblproperties('parquet.compress'='SNAPPY')
+
+
+-----------------------------------------------------------------
+

@@ -1,0 +1,124 @@
+
+* AULA 5 - HIVE - PARTICIONAMENTO DE TABELAS *
+
+--------------------------------------------------------------
+
+#Consultas SQL interpretarão como coluna
+
+ Select * from user where cidade=sp
+
+
+#Comando para criar partição:
+ - Um campo que não esta na estrutura de dados.
+ - Organizar os dados.
+ - Consultas SQL interpretarão como colunas
+ex: 
+# o campo cidade NÃO PODE ESTAR NA ESTRUTURA DA TABELA;
+ - select * from user where cidade=sp
+	partitioned by (<campo> <type>)
+ 
+--------------------------------------------------------------
+
+#Buket
+- Quantidade que os dados serão divididos
+- Campo precisa estar na estrutura da tabela
+
+#Comando
+
+ clustered by (<campo>) into <qtd> buckets
+ clustered by (id) into 256 buckets 
+
+--------------------------------------------------------------
+
+# EXEMPLO TABELA PARTICIONADA 
+
+create table user(
+	id int,
+	name string,
+	age int
+	)
+	partitioned by (data string)
+	clustered by (id) into 4 buckets;
+
+
+--------------------------------------------------------------
+
+* PARTICIONAMENTO ESTÁTICO *
+
+- Pode inserir os arquivos individualmente em uma tabela de partição.
+- Criar novas partições manualmente.
+
+# comando
+ hive> alter table <pop> add partition(<partição>='<valor>');
+
+
+#ADICIONAR UMA PARTIÇÃO:
+hive> alter table <nomeTabela> add partition(<partição>=<valor>);
+ 
+
+#EXEMPLO:
+#Criar uma partição para cada dia
+ hive> alter table logs add partition(data=’2019-21-02’);
+
+--------------------------------------------------------------
+
+* PARTICIONAMENTO DINAMICO *
+
+- Partições são criadas automaticamente nos tempos de carregamento.
+- Novas partições podem ser criadas dinamicamente.
+- Baseada no valor da última coluna.
+	Se a partição não existir, ela será criada
+	Se existir, os dados serão adicionados na partição
+
+#EXEMPLO:
+hive> insert overwrite table user_cidade partition(cidade) select * from user;
+
+
+#Por padrão, o particionamento dinâmico está desativado, para ativar
+
+
+#ATIVAR
+ SET hive.exec.dynamic.partition = true;
+
+ SET hive.exec.dynamic.partition.mode = nonstrict ;
+
+--------------------------------------------------------------
+* OPÇÕES COM PARTIÇÕES *
+
+#Visualizar partições de uma tabela
+hive> show partitions user;
+
+
+#Excluir partições de uma tabela
+hive> alter table user drop partition(city=’SP’);
+
+
+#Alterar nome da partição de uma tabela
+hive> alter table user partition city rename to partition state;
+
+--------------------------------------------------------------
+
+* REPARAR UMA TABELA *
+
+#Reparar partições na tabela Hive
+- Quando a tabela não encontra a partição
+- Sincronizar a tabela com o metastore
+
+
+#Comando - Hive > beeline
+ msck repair table <nomeTabela>
+
+--------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+
+* LOCAL E HDFS * 
+
+# Não esqueça que no namenode, temos 2 sistemas de arquivos para listar:
+
+Local: ls /
+HDFS: hdfs dfs -ls /
+
+#LOCAL:
+/home
+
+#HDFS:
+root@namenode:/home# hdfs dfs -ls /user/hive/warehouse  ==>  namenode -> HDFS  
+root@namenode:/home# hdfs dfs -ls /user/aluno/maoshie/  ==>  namenode -> HDFS
+
+--------------------------------------------------------------------------------
+
+# TABELA INTERNA
+# Tabelas criadas no HIVE(beeline)
+
+root@namenode:/# hdfs dfs -ls /user/hive/warehouse/maoshie.db
+
+ /user/hive/warehouse/maoshie.db/pop
+ /user/hive/warehouse/maoshie.db/pop_parquet
+ /user/hive/warehouse/maoshie.db/pop_parquet_snappy
+
+--------------------------------------------------------------------------------

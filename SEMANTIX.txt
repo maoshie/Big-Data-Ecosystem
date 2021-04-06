@@ -1,0 +1,89 @@
+
+* SEMANTIX *
+
+----------------------------------------------------------------------------------------
+ 
+
+* ACESSOS *
+ 
+- NAMENODE
+docker exec -it namenode bash
+
+
+- DATABASE
+ docker exec -it database bash
+
+
+- HIVE-MASTER
+docker exec -it hive-master bash
+
+
+- SPARK
+ docker exec -it spark bash
+
+
+#ACESSO AO BEELINE:
+ docker exec -it hive-server bash # Acessar o hive-server primeiro!
+ /opt# beeline -u jdbc:hive2://localhost:10000 --username root --password secret
+
+
+# Mysql
+ docker exec -it database bash
+ mysql -psecret <db_name>
+
+#Sqoop
+docker exec -it namenode bash (Sqoop fica dentro do namenode)
+sqoop help
+
+----------------------------------------------------------------------------------------
+- NAMENODE
+
+- 1 mestre(namenode)-(ativo) - 4 nós escravos(datanode)
+- 1 standby namenode (espera)
+
+
+----------------------------------------------------------------------------------------
+- MapReduce 1
+
+- Processos MapReduce
+	- split
+	- Map
+	- Shuffle
+	- Reduce
+
+----------------------------------------------------------------------------------------
+- Edge Node
+
+- Interface do cluster Hadoop e a rede externa;
+- Diminui o uso de recursos;
+- Executa aplicativos clientes;
+
+----------------------------------------------------------------------------------------
+- DATA LAKE 
+
+- INGESTÃO
+	- Sqoop - Sqoop import
+	- Flume
+	- kafka
+	- Beats
+	- Logstash
+
+- ARMAZENAMENTO
+	- HDFS - hdfs dfs -ls /user/aluno/maoshie
+	- HBase
+	- Kudu
+	- Cassandra
+	- Redis
+	- MongoDB
+	- Elasticsearch
+
+- PROCESSAMENTO
+	- MapReduce
+	- Spark
+	- Flink
+
+- ANALISE DE DADOS
+	- Hive
+	- Impala
+
+----------------------------------------------------------------------------------------
