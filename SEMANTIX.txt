@@ -30,6 +30,8 @@ docker exec -it hive-master bash
 # Mysql
  docker exec -it database bash
  mysql -psecret <db_name>
+ root@database:/# mysql -h localhost -u root -psecret
+
 
 #Sqoop
 docker exec -it namenode bash (Sqoop fica dentro do namenode)

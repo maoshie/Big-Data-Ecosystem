@@ -1,0 +1,52 @@
+
+AULA 7 - SQOOP - Verificar e Instalar os Banco de Dados de testes
+
+# Exercícios - Verificar e Instalar os Banco de Dados de testes
+
+
+
+1. Copiar os dados do local para o contêiner database
+    $ docker cp input/exercises-data/db-sql/ database:/
+
+maoshie@DESKTOP-343S2AC:~/docker-bigdata$ docker cp input/exercises-data/db-sql/ database:/
+maoshie@DESKTOP-343S2AC:~/docker-bigdata$
+
+--------------------------------------------------------------------------------
+# Acessar o contêiner database
+    $ docker exec -it database bash
+
+root@database:/# ls /db-sql/
+Changelog                      images                  load_salaries1.dump  sakila
+README.md                      load_departments.dump   load_salaries2.dump  show_elapsed.sql
+employees.sql                  load_dept_emp.dump      load_salaries3.dump  sql_test.sh
+employees_partitioned.sql      load_dept_manager.dump  load_titles.dump     test_employees_md5.sql
+employees_partitioned_5.1.sql  load_employees.dump     objects.sql          test_employees_sha.sql
+root@database:/#
+
+--------------------------------------------------------------------------------
+# Instalar Banco de Dados de testes;
+	
+   - Diretório /db-sql
+	$cd /db-sql
+	$mysql -psecret < employees.sql
+
+# Acessar mysql:
+    root@database:/# mysql -h localhost -u root -psecret
+    root@database:/# mysql -psecret
+
+
+   - Diretório / db sql /sakila-BD sakila
+	$cd /db-sql sakil a /
+---------------------------------------------------------------------------
+# Gera toda a estrutura, cria o banco de dados, cria as tabelas 
+ $mysql -psecret < sakila-mv-schema.sql
+
+root@database:/db-sql/sakila# mysql -psecret < sakila-mv-schema.sql
+mysql: [Warning] Using a password on the command line interface can be insecure.
+
+---------------------------------------------------------------------------
+# insere informações na tabela.
+ $ mysql -psecret < sakila-mv-data.sql
+
+
+
