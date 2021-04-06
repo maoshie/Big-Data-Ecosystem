@@ -1,0 +1,65 @@
+
+* AULA 7 - SQOOP - INGESTÃO DE DADOS *
+
+# Acessar o sqoop:
+$ docker exec -it namenode bash
+
+-------------------------------------------------------------------
+# Processo de Enviar/Receber os dados locais para o sistema distribuído
+
+- Data Lake
+      > Batch
+	  > SQOOP
+	
+      > Streaming
+          > Flume
+          > Kafka
+	
+
+#Importar dados
+
+# ORIGEM:
+- Banco de dados relacional (RDBMS)
+	- MySQL, SQL Server, Oracle
+
+
+# DESTINO:
+- Para o HDFS, Hive ou HBase
+	- Transformar dados em MapReduce
+	- Execução em paralelo
+        - Tolerância a falhas
+
+----------------------------------------------------------------------
+
+# Sqoop Comandos 
+
+	help
+	version
+	import
+	import-all-tables
+	export
+	validation
+	job
+	metastore
+	merge
+	codegen
+	create hive table
+	eval
+	list databases
+	list tables
+	
+
+----------------------------------------------------------------------
+
+#Listar todos os comandos
+$sqoop help
+
+#Ajuda de um comando
+$ sqoop help import
+
+
+#Importar todas as tabelas de um banco de dados
+$ sqoop import-all-tables ...
+
+
+----------------------------------------------------------------------

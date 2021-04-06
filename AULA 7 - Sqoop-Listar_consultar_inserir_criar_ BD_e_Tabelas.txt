@@ -1,0 +1,117 @@
+
+* AULA 7 - Sqoop - Listar/consultar/inserir/criar BD e Tabelas *
+
+# CONEXAO BANCO DE DADOS;
+
+--------------------------------------------------------------
+# Informações para conexão
+  Database type (MySQL, Oracle etc)
+  Hostname
+  Port number
+  Database Name (list databases)
+
+
+# Parâmetros
+ --connect <conexão> \
+ --username usuario \
+ --password senha
+
+
+# Conexao:
+
+DB     - String de conexão
+HSQLDB - jdbc:hsqldb:*//
+MySQL - jdbc:mysql://
+Oracle - jdbc:oracle:*//
+PostgreSQL - jdbc:postgresql://
+CUBRID - jdbc:cubrid
+
+--------------------------------------------------------------
+
+# Acessar o sqoop:
+$ docker exec -it namenode bash
+
+# Listar Banco de Dados;
+Sqoop list-databases --connect jdbc:mysql://database 
+ -- username root --password secret
+
+
+# LISTAR TABELAS;
+Sqoop list-tables --connect jdbc:mysql://database/<nome_tabela>
+ --username root --password secret
+
+
+--------------------------------------------------------------
+
+# CONSULTAR banco de dados remoto;
+
+# Acessar o sqoop:
+$ docker exec -it namenode bash
+
+
+# Comando: 
+Sqoop eval ....
+
+sqoop eval --connect jdbc:mysql://database/<nome_tabela>
+ --username=root --password=secret
+ --query "SELECT * FROM <nome_tabela> limit 10"
+
+--------------------------------------------------------------
+# CRIAR TABELA:
+
+sqoop eval --connect jdbc:mysql://database/<nome_tabela>
+ --username=root --password=secret
+ --query"create table setor(cod int(2), name varchar(30))"
+
+sqoop eval --connect jdbc:mysql://database/<nome_tabela>
+ --username=root --password=secret
+ --query"describe setor"
+
+--------------------------------------------------------------
+# INSERIR LINHA NA TABELA:
+
+sqoop eval --connect jdbc:mysql://database/<nome_tabela>
+ --username=root --password=secret
+ --query "insert into setor values(1,'vendas')" 
+
+--------------------------------------------------------------
+# CONSULTAR TABELA:
+
+sqoop eval --connect jdbc:mysql://database/<nome_tabela>
+ --username=root --password=secret
+ --query"select * from actor"
+
+
+sqoop eval --connect jdbc:mysql://database/<nome_tabela>
+ --username=root --password=secret
+ --query "select * from employees where first_name like ‘A’"
+
+--------------------------------------------------------------
+
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
