@@ -1,0 +1,113 @@
+
+
+---------------------------------------------------------------------
+1. Mostrar todos os databases
+
+# sqoop list-databases:
+
+information_schema
+employees
+hue
+mysql
+performance_schema
+sakila
+sys
+
+---------------------------------------------------------------------
+2. Mostrar todas as tabelas do bd employees, sakila
+
+# sqoop list-tables:
+
+# employees:
+benefits
+current_dept_emp
+departments
+dept_emp
+dept_emp_latest_date
+dept_manager
+employees
+employees_2
+titles
+
+# sakila:
+actor
+actor_info
+address
+category
+city
+country
+customer
+customer_list
+film
+
+---------------------------------------------------------------------
+3. Inserir os valores ('d011', 'Engenharia de dados') na tabela 
+departments do bd employees
+
+# inserir:
+'d011', 'Engenharia de dados'
+'d012', 'Analitycs data'
+'d013', 'Science data'
+
+# Sqoop eval:
+# BD: employees:
+#table: departments:
+
+---------------------------------------------------------------------
+4. Pesquisar todos os registros da tabela departments
+
+# CONSULTAR: Sqoop eval
+
+-------------------------------
+| dept_no | dept_name            |
+-------------------------------
+| d001 | Marketing            |
+| d002 | Finance              |
+| d003 | Human Resources      |
+| d004 | Production           |
+| d005 | Development          |
+| d006 | Quality Management   |
+| d007 | Sales                |
+| d008 | Research             |
+| d009 | Customer Service     |
+| d010 | BI                   |
+| d011 | Engenharia de dados  |
+| d012 | Data Analitycs       |
+| d013 | Data Science         |
+-------------------------------
+
+
+---------------------------------------------------------------------
+5. Criar a tabela city(cod int(2)  AUTO_INCREMENT PRIMARY KEY, 
+name varchar(30)) no bd employees
+
+#database: employees
+#table: city
+city(cod int(2)  AUTO_INCREMENT PRIMARY KEY,
+name varchar(30))
+
+
+---------------------------------------------------------------------
+6. Inserir os valores na tabela city:
+
+# valores:
+(null,'Sao Paulo')
+(null,'Rio de Janeiro')
+(null,'Minas Gerais')
+
+
+---------------------------------------------------------------------
+7. Pesquisar todos os registros da tabela city
+
+-----------------------------
+| cod | name                 |
+-----------------------------
+| 1  | Sao Paulo            |
+| 2  | Rio de Janeiro       |
+| 3  | Minas Gerais         |
+| 4  | Rio Grande do Sul    |
+| 5  | Bahia                |
+-----------------------------
+
+
+---------------------------------------------------------------------
