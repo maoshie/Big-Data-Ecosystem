@@ -1,0 +1,91 @@
+
+* AULA 8 Sqoop Importacao local/hdfs *
+
+* AULA 8 - Importar dados Diretorios *
+
+* ARMAZENAR DIRETORIO DIFERENTE *
+---------------------------------------------------------------------
+# PASTA PADRÃO:
+
+- Por padrão, o sqoop armazena os dados no diretório /home do HDFS.
+ex: 
+ /user/root/<tablename>
+
+---------------------------------------------------------------------
+# ARMAZENAR EM UM DIRETORIO ESPECIFICO:
+
+comando: --target-dir
+
+sqoop import... --target-dir /user/root/db
+
+---------------------------------------------------------------------
+# ARMAZENA EM UM DIRETORIO BASE:
+
+comando: --warehouse-dir /user/root/db
+
+---------------------------------------------------------------------
+# DIFERENÇA:
+
+- Importar tabela departments:
+  
+  --target-dir /data = /data
+  --warehouse-dir /data = /data/departments 
+
+---------------------------------------------------------------------
+# ARMAZENAR DIRETÓRIO EXISTENTE:
+
+- Por padrão, o sqoop falha a importação se o diretorio de destino
+já existir.
+
+---------------------------------------------------------------------
+# SOBRESCREVER O DIRETORIO:
+
+comando: -delete-target-dir
+
+sqoop import... --warehouse-dir /user/cloudera/db -delete-target-dir
+
+---------------------------------------------------------------------
+# ANEXAR OS DADOS NO DIRETÓRIO EXISTENTE:
+
+comando: -append
+
+sqoop import... --warehouse-dir /user/cloudera/db -append
+
+---------------------------------------------------------------------
+
+# DELIMITADORES DIFERENTES:
+
+- Por padrão, o sqoop gera arquivos de texto.
+  - campos delimitados por virgula;
+  - linhas terminadas por quebras de linhas '\n'
+
+# COMANDOS:
+
+ --fields-terminated-by ','
+ --lines-terminated-by '\n'
+
+- especificar o delimitador:
+
+ 'qualquer coisa'
+ '\b' = backspace
+ '\n' = newline
+ '\t' = tab
+ '\0' = NULL
+
+# EXEMPLO:
+
+sqoop import... --fields-terminated-by '\t' --lines-terminated-by '&'
+
+
+
+
+
+
+
+
+
+
+
+
+
+

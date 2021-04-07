@@ -1,0 +1,116 @@
+
+* AULA 8 Sqoop Importacao local/hdfs *
+
+* AULA 8 - Importar dados
+
+---------------------------------------------------------------------
+# Importar Dados do RDBMS para o HDFS
+
+- Importar:
+
+  Qual JDBC? = jdbc:mysql://database
+  Qual usuário e senha? = --username root --password secret
+  Qual database? = /employees
+  Quais tabelas? = benefits
+  Quais dados? = tabelas, colunas ou específicos.
+
+- COMANDO:
+  
+  import
+
+-ex:
+
+sqoop import --connect jdbc:mysql://database
+ --username root --password secret
+
+---------------------------------------------------------------------
+# IMPORTAR TABELA, COLUNA E LINHAS:
+
+# IMPORTAR UMA TABELA INTEIRA;
+
+# comando:
+sqoop import --table <table>
+
+exemplo:
+
+sqoop import --table <table>
+--connect jdbc:mysql://database/employees
+--username root --password secret
+
+
+----------------------------------------------------------------------
+# IMPORTAR COLUNA:
+
+# COMANDO:
+sqoop import --table <table>... --columns"cod, name"
+
+sqoop import --table <table> --connect jdbc:mysql://database/employees
+--username root --password secret --columns "cod, name"
+
+---------------------------------------------------------------------
+# IMPORTAR COLUNA COM WHERE:
+
+#COMANDO:
+sqoop import --table <table>... --where "cod=1"
+
+sqoop import --table <table> --connect jdbc:mysql://database/employees
+--username root --password secret -- where "gender='M'"
+
+
+---------------------------------------------------------------------
+# BANCO DE DADOS MYSQL:
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| employees          |
+| hue                |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+---------------------------------------------------------------------
+# TABELAS DO DATABASE employees:
+
+mysql> show tables;
++----------------------+
+| Tables_in_employees  |
++----------------------+
+| benefits             |
+| city                 |
+| current_dept_emp     |
+| departments          |
+| dept_emp             |
+| dept_emp_latest_date |
+| dept_manager         |
+| employees            |
+| employees_2          |
+| titles               |
++----------------------+
+10 rows in set (0.00 sec)
+
+---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
