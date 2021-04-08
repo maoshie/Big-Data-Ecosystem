@@ -1,0 +1,102 @@
+
+* AULA 8 - SQOOP - PARALELISMO *
+
+-------------------------------------------------------------------
+# QUANTIDADE MAPEADORES:
+
+- Por padrão, o número de mapeadores é 4.
+
+COMANDO:
+ -m <qtde_mapeadores>
+ -num-mappers <qtde_mapeadores>
+
+EXEMPLO:
+sqoop import... -m 2
+
+
+-------------------------------------------------------------------
+# Divisão aplicada a coluna com chave primária:
+
+- se existir:
+ -num-mappers 8
+
+- se não existir:
+ -num-mappers 1
+ -auto-reset-to-one-mapper
+    - Manipular tabelas automaticamente.
+
+ num-mappers > 1 = erro
+    - solução -split
+
+
+# DIVIDIR MAPEADORES EM COLUNAS SEM CHAVES.
+ -split-by:
+
+ sqoop import... --split-by:id
+
+
+# VALORES NULOS NA COLUNA:
+- Registros correspondentes da tabela serão ignorados
+
+
+# Dados na coluna de divisão não precisam ser exclusivos:
+ - Pode haver uma distorção nos dados durante a importação
+
+
+------------------------------------------------------------------------------
+
+# VALORES NULOS:
+
+# Por padrão o Sqoop importa os dados null como string null.
+
+# Valor escrito para um campo nulo de número
+
+--null-non-string <valorNULO>
+
+ $sqoop import... --null-non-string '-1'
+
+------------------------------------------------------------------------------
+# Valor escrito para um campo nulo de string.
+
+--null-string<valor nulo>
+$ sqoop import... --null-string 'NA'
+
+
+------------------------------------------------------------------------------
+
+$ sqoop import … null non string N' null string N’
+
+Importação compatível com Hive e Impala
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+
+* AULA 8 - SQOOP - Formato_compressão *
+
+# Por padrão o Sqoop armazena os dados no formato de arquivo de texto.
+
+-----------------------------------------------------------
+# Formato de arquivo de texto (Default):
+
+$ sqoop import... --as-textfile
+
+-----------------------------------------------------------
+# Formato de arquivo de Parquet:
+
+$ sqoop import... --as-parquetfile
+
+-----------------------------------------------------------
+# Formato de arquivo de Avro:
+
+$ sqoop import... --as-avrodatafile
+
+-----------------------------------------------------------
+# Formato de arquivo de Sequência:
+
+$ sqoop import... --as-sequencefile
+
+-----------------------------------------------------------
+
+# COMPRESSÃO DE DADOS:
+
+# Por padrão, o Sqoop comprimi os dados por gzip.
+
+
+# Codecs de compactação:
+
+Gzip - org.apache.hadoop.io.compress.GzipCodec
+Bzip2 - org.apache.hadoop.io.compress.BZip2Codec
+Snappy - org.apache.hadoop.io.compress.SnappyCode
+Others deflate , lz4,
+
+-----------------------------------------------------------
+# Codecs suportados
+
+/etc/hadoop/conf/core-site.xml
+
+-----------------------------------------------------------
+# COMANDOS:
+
+#1 - Habilitar compressão: --compress
+
+#2 - Escolher compressão: --compression-codec <codec>
+
+# EXEMPLO:
+
+sqoop import... --compress --compression-codec 
+org.apache.hadoop.io.compress.SnappyCode
+
+-----------------------------------------------------------
