@@ -1,0 +1,210 @@
+
+* AULA 9 Sqoop - Exercícios-Importação BD Sakila-Carga Incremental *
+
+-----------------------------------------------------------------------------------
+#Realizar com uso do MySQL
+
+1. Criar a tabela cp_rental_append, contendo a cópia da tabela
+ rental com os campos rental_id e rental_date;
+
+#BD: sakila
+#New Table: cp_rental_append
+#copia: rental
+#campos: rental_id, rental_date
+
+# comando:
+mysql> create table cp_rental_append select rental_id, rental_date from rental;
+
+mysql> select * from cp_rental_append limit 10;
++-----------+---------------------+
+| rental_id | rental_date         |
++-----------+---------------------+
+|         1 | 2005-05-24 22:53:30 |
+|         2 | 2005-05-24 22:54:33 |
+|         3 | 2005-05-24 23:03:39 |
+|         4 | 2005-05-24 23:04:41 |
+|         5 | 2005-05-24 23:05:21 |
+|         6 | 2005-05-24 23:08:07 |
+|         7 | 2005-05-24 23:11:53 |
+|         8 | 2005-05-24 23:31:46 |
+|         9 | 2005-05-25 00:00:40 |
+|        10 | 2005-05-25 00:02:21 |
++-----------+---------------------+
+10 rows in set (0.00 sec)
+
+
+-----------------------------------------------------------------------------------
+2 .Criar a tabela cp_rental_id e cp_rental_date, contendo a cópia da tabela cp_rental_append;
+
+#BD: sakila:
+#NEW TABLE: cp_rental_id , cp_rental_date
+#Origem: cp_rental_append
+
+
+#1 - cp_rental_id 
+mysql> select * from cp_rental_id limit 5;
++-----------+---------------------+
+| rental_id | rental_date         |
++-----------+---------------------+
+|         1 | 2005-05-24 22:53:30 |
+|         2 | 2005-05-24 22:54:33 |
+|         3 | 2005-05-24 23:03:39 |
+|         4 | 2005-05-24 23:04:41 |
+|         5 | 2005-05-24 23:05:21 |
++-----------+---------------------+
+
+
+#2 - cp_rental_date
+mysql> select * from cp_rental_date limit 5;
++-----------+---------------------+
+| rental_id | rental_date         |
++-----------+---------------------+
+|         1 | 2005-05-24 22:53:30 |
+|         2 | 2005-05-24 22:54:33 |
+|         3 | 2005-05-24 23:03:39 |
+|         4 | 2005-05-24 23:04:41 |
+|         5 | 2005-05-24 23:05:21 |
++-----------+---------------------+
+
+
+-----------------------------------------------------------------------------------
+# Realizar com uso do Sqoop - Importações no warehouse /user/hive/warehouse/db_test3 
+e visualizar no HDFS;
+
+
+3. Importar as tabelas cp_rental_append, cp_rental_id e cp_rental_date com 1 mapeador
+
+#3.1 - cp_rental_append
+#BD: sakila
+# mapeadores: -m 1
+#destino: /user/hive/warehouse/db_test3
+
+#COMANDO:
+sqoop import --table cp_rental_append --connect jdbc:mysql://database/sakila
+--username root --password secret -m 1 
+--warehouse-dir /user/hive/warehouse/db_test3
+
+#VISUALIZAR:
+root@namenode:/# hdfs dfs -ls -R /user/hive/warehouse/db_test3
+/user/hive/warehouse/db_test3/cp_rental_append
+/user/hive/warehouse/db_test3/cp_rental_append/_SUCCESS
+/user/hive/warehouse/db_test3/cp_rental_append/part-m-00000
+
+---------------------------------------------
+
+#3.2 - cp_rental_id
+# mapeadores: -m 1
+#destino: /user/hive/warehouse/db_test3
+
+#COMANDO:
+sqoop import --table cp_rental_id --connect jdbc:mysql://database/sakila
+--username root --password secret -m 1 
+--warehouse-dir /user/hive/warehouse/db_test3
+
+#VISUALIZAR:
+root@namenode:/# hdfs dfs -ls -R /user/hive/warehouse/db_test3
+/user/hive/warehouse/db_test3/cp_rental_id
+/user/hive/warehouse/db_test3/cp_rental_id/_SUCCESS
+/user/hive/warehouse/db_test3/cp_rental_id/part-m-00000
+
+---------------------------------------------
+
+#3.3 - cp_rental_date
+# mapeadores: -m 1
+#destino: /user/hive/warehouse/db_test3
+
+#COMANDO:
+sqoop import --table cp_rental_date --connect jdbc:mysql://database/sakila
+--username root password secret -m 1 
+--warehouse-dir /user/hive/warehouse/db_test3
+
+#VISUALIZAR:
+/user/hive/warehouse/db_test3/cp_rental_date
+/user/hive/warehouse/db_test3/cp_rental_date/_SUCCESS
+/user/hive/warehouse/db_test3/cp_rental_date/part-m-00000
+
+
+-----------------------------------------------------------------------------------
+
+# Realizar com uso do MySQL
+
+4. Executar o sql /db-sql/sakila/insert_rental.sql no container do database
+
+#1- $ docker exec -it database bash
+#2- $ cd /db-sql/sakila# mysql -psecret < insert_rental.sql
+ 
+insert into cp_rental_date values(16055,'2005-08-23 22:59:20');
+
+insert into cp_rental_id values(16055,'2005-08-23 22:59:20');
+
+-----------------------------------------------------------------------------------
+
+# Realizar com uso do Sqoop:
+- Importações no warehouse /user/hive/warehouse/db_test3 e visualizar no HDFS
+
+5. Atualizar a tabela cp_rental_append no HDFS anexando os novos arquivos
+
+#CAMINHO: /user/hive/warehouse/db_test3
+#TABLE: cp_rental_append
+
+
+sqoop import --table cp_rental_append --connect jdbc:mysql://database/sakila
+--username root --password secret 
+--warehouse-dir /user/hive/warehouse/db_test3 -m 1 --append
+
+# VISUALIZAR:
+-------------------------------------
+| rental_id   | rental_date         |
+-------------------------------------
+| 16049       | 2005-08-23 22:50:12.0 |
+| 16048       | 2005-08-23 22:43:07.0 |
+| 16047       | 2005-08-23 22:42:48.0 |
+| 16046       | 2005-08-23 22:26:47.0 |
+| 16045       | 2005-08-23 22:25:26.0 |
+
+-----------------------------------------------------------------------------------
+6. Atualizar a tabela cp_rental_id no HDFS de acordo com o último registro 
+de rental_id, adicionando apenas os novos dados.
+
+#DB: sakila
+#table: cp_rental_id
+#LastValue: 16049
+#adicionar apenas os novos: 
+--incremental append --check-column <coluna> --last-value <valor>
+
+
+#comando:
+sqoop import --table cp_rental_id --connect jdbc:mysql://database/sakila
+--username root --password secret 
+--warehouse-dir /user/hive/warehouse/db_test3 
+-m 1 --incremental append --check-column rental_id
+--last-value 16049
+
+#VISUALIZAR:
+-------------------------------------
+| rental_id   | rental_date         |
+-------------------------------------
+| 16055       | 2005-08-23 22:59:20.0 |
+| 16054       | 2005-08-23 22:57:40.0 |
+| 16053       | 2005-08-23 22:56:10.0 |
+| 16052       | 2005-08-23 22:55:20.0 |
+| 16051       | 2005-08-23 22:54:30.0 |
+-------------------------------------
+
+-----------------------------------------------------------------------------------
+7. Atualizar a tabela cp_rental_date no HDFS de acordo com o último registro 
+de rental_date, atualizando os registros a partir desta data;
+
+
+#VISUAIZAR: 
+-------------------------------------
+| rental_id   | rental_date         |
+-------------------------------------
+| 13421       | 2006-02-14 15:16:03.0 |
+| 15542       | 2006-02-14 15:16:03.0 |
+| 15294       | 2006-02-14 15:16:03.0 |
+| 15458       | 2006-02-14 15:16:03.0 |
+| 12988       | 2006-02-14 15:16:03.0 |
+-------------------------------------
+root@namenode:/#
+

@@ -1,0 +1,75 @@
+
+* AULA 9 Sqoop - Otimizar Importação * 
+
+# SQOOP JOBS:
+
+- Salvar comandos de importação/exportação;
+- importar/exportar as linhas atualizadas da tabela do RDBMS/HDFS
+
+# COMANDO:
+sqoop job --<atributo>
+
+----------------------------------------------------------------
+# ATRIBUTOS:
+	
+# CRIAR JOB:
+--create <job-id>
+
+sqoop job --create myjob 
+--import --connect jdbc:mysql://database/db
+--username root --password secret --table employees --m 1
+ 
+
+# VERIFICAR JOBS SALVOS:
+--list
+sqoop job --list
+
+
+# VER DETALHES DO JOB:
+--show <job-id>
+sqoop job --show myjob
+
+
+# EXECUTAR JOB:
+--exec <job_id>
+sqoop job --exec myjob
+
+
+#DELETAR JOB:
+--delete <job-id>
+sqoop job --delete myjob
+
+----------------------------------------------------------------
+
+# CARGA INCREMENTAL: 
+
+# Carga Incremental --append
+# Anexar dados em um conjunto de dados existentes no HDFS;
+
+# ANEXAR TODOS OS DADOS:
+ sqoop import... --append --where 'id_venda > 10'
+
+
+# ANEXAR APENAS OS NOVOS DADOS(incremental)
+- Sem sobrescrever os dados;
+
+sqoop import... --incremental append
+--check-column id_venda --last-value 50; a partir do 51 ~ ...
+
+----------------------------------------------------------------
+
+# CARGA INCREMENTAL - LASTMODIFIED:
+
+- Inserir dados em um conjunto de dados existentes no HDFS.
+- Atualizar apenas os novos dados (Incremental)
+- Sobrescrever os dados, em relação à uma coluna e um valor de data e hora
+
+- adicionar o atributo --merge-key
+  - coluna e um valor exclusivo crescente.
+
+sqoop import... --incremental lastmodified
+--merge-key data_id
+--check-column data_venda
+--last-value '2021-01-18'
+
+----------------------------------------------------------------
