@@ -1,0 +1,71 @@
+
+* AULA 9 SQOOP - IMPORTAÇÃO LOCAL_HIVE *
+
+
+---------------------------------------------------------------------
+# PADRÃO TABELA HIVE;
+
+# Caminho padrão:
+ /user/hive/warehouse/
+
+
+# Melhor desempenho:
+ - Formato parquet.
+ - compressão SNAPPY
+
+---------------------------------------------------------------------
+#TIPO COLUNA;
+
+# Sqoop é pré-configurado para mapear a maioria dos tipos sql
+para JAVA ou HIVE.
+
+
+# Mapeamento para java:
+
+--map-column-java
+sqoop import... --map-column-java id=String, value=integer
+
+
+# Mapeamento para HIVE:
+--map-column-hive
+sqoop import...--map-column-hive id=string, value=integer
+
+---------------------------------------------------------------------
+#IMPORTAÇÃO TABELA HIVE;
+
+# Importar tabela para o HIVE:
+
+--hive-import
+sqoop import...
+
+--hive-import --hive-table maoshie.titles
+
+-------------------------------------------------
+# Sobrescrever os dados se a tabela hive existir:
+
+--hive-overwrite
+sqoop import...--hive-overwrite
+
+-------------------------------------------------
+# O job ira falhar se uma tbl hive existir:
+
+--create-hive-table
+sqoop import...--create-hive-table
+
+-------------------------------------------------
+# Especificar o nome da tabela hive:
+
+--hive-table
+sqoop import...--hive-table <db.name>.<table_name>
+
+
+# EXEMPLO: (dentro do NAMENODE)
+
+sqoop import --table employees --connect jdbc:mysql://database/employees
+--username root --password secret 
+--warehouse-dir /user/hive/warehouse/teste.db  #(destino)
+--hive-import  #(importar para o HIVE)
+--create-hive-table  #(criar uma tabela HIVE)
+--hive-table teste.user  #(nome da tabela HIVE)
+
+---------------------------------------------------------------------

@@ -1,0 +1,60 @@
+
+* AULA 9 SQOOP - EXPORTACAO HDFS_LOCAL *
+
+# do HDFS > Banco de dados;  
+
+- qual diretorio do HDFS?
+- qual JDBC ?
+- qual user e senha?
+- qual database?
+- quais tabelas?
+- quais dados?
+
+# COMANDO:
+sqoop import --connect jdbc:mysql://database/log
+--username root --password secret
+
+--------------------------------------------------------------------
+
+# COMANDOS BASICOS EXPORTAÇÃO:
+
+# Definir o diretorio de leitura no HDFS:
+-- export-dir </user/hive/waehouse...>
+
+
+# Definir o nome da tabela no SGBC:
+--table <nome_tabela>
+
+
+# Opções de atualização:
+
+
+--update-mode
+  updateonly(default)
+- acrescenta novas linhas na tabela;
+- Cada registro de entrada é transformado em um INSERT;
+
+
+  allowinsert
+- Atualizar as linhas se existirem na tabela
+- Inserir linhas se não existirem na tabela
+
+
+
+--------------------------------------------------------------------
+
+#EXPORTAR DADOS:
+
+- A tabela precisa ser criada no SGBD antes da exportação do Sqoop
+
+# criar a tabela antes!!
+MySQL: create table product_recommendations()
+
+
+# EXEMPLO:
+sqoop export --connect jdbc:mysql://database/employees
+--username root --password secret
+--export-dir /user/root/recommender_output
+--update-mode allowinsert
+--table product_recommendations
+S
