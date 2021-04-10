@@ -1,0 +1,27 @@
+
+* AULA 10 - HBase * 
+
+
+----------------------------------------------------------
+# COMANDOS:
+
+- iniciar:
+hbase shell
+
+
+- ajuda de comandos:
+help <comando>
+
+
+- ajuda sobre comandos de table:
+table -help
+
+----------------------------------------------------------
+
+# ACESSAR O HBASE:
+
+#1- docker exec -it hbase-master bash
+
+#2- hbase shell (inicia)
+hbase(main):004:0>
+
