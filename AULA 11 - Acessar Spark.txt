@@ -1,0 +1,28 @@
+
+* AULA 11 - Spark *
+
+-----------------------------------------------------------------------
+
+# Iniciar Spark:
+
+#Python: pyspark
+#scala: spark-shell
+
+-----------------------------------------------------------------------
+
+# ACESSAR SPARK:
+
+- Adicionar o jar para salvar tabelas Hive.
+
+#1- curl -O https://repo1.maven.org/maven2/com/twitter/parquet-hadoop-bundle/1.6.0/
+parquet-hadoop-bundle-1.6.0.jar
+
+#2- docker cp parquet-hadoop-bundle-1.6.0.jar spark:/opt/spark/jars
+
+#3-  docker exec -it spark bash
+
+#scala: spark-shell
+#python: pyspark 
+
+-----------------------------------------------------------------------
+

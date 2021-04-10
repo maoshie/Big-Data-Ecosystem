@@ -1,0 +1,200 @@
+
+* AULA 10 - DataFrame *
+
+------------------------------------------------------------------------
+# DATAFRAME;
+
+- Dados estruturados e semiestruturados em forma tabular
+- Java, Scala e Python
+- Transformação
+- Ação
+
+
+------------------------------------------------------------------------
+
+# DATAFRAME - LEITURA E ARQUIVOS;
+
+- Dados suportados para leitura e escrita no DataFrame:
+- Text file:
+	csv
+	json
+	plain text
+
+- Binary format files:
+	Apache Parquet (Muito utilizado)
+	Apache ORC
+
+- Tables:
+	Hive metastore
+
+- JDBC
+Configurar outros tipos
+
+
+# val <dataframe> = spark.read.<formato>("arquivo")
+
+<formato>
+
+textFile("arquivo.txt")
+csv(“arquivo.csv”)
+jdbc(jdbcUrl,"bd.tabela", connectionProperties)
+load ou parquet("arquivo.parquet")
+table("tabelaHive")
+json("arquivo.json")
+orc("arquivo.orc")
+
+<arquivo>
+"diretorio/"
+"diretorio/*.log"
+"arq1.txt, arq2.txt"
+"arq*"
+
+val <dataframe> = spark.read.format("<formato>").loud("<arquivo>")
+
+# Opções para configurar o arquivo de leitura:
+ spark.read.option(...)
+
+# EXEMPLO:
+scala> val userDF = spark.read.json("user.json")
+scala> val userDF = spark.read.format("json").load("usr.json")
+
+------------------------------------------------------------------------
+
+# DATAFRAME - OPERAÇÕES;
+
+# <AÇÃO>:
+
+count : retorna o número de linhas
+first : retorna a primeira linha
+take(n): retorna as primeiras n linhas como um array
+show(n): exibe as primeiras n linhas da tabela
+collect : Trazer toda a informação dos nós do drive
+distincts : retorna os registros, removendo os repetidos
+write : salvar os dados
+printSchema(): Visualizar a estrutura dos dados
+	- DataFrame sempre tem um esquema associado
+
+#EXEMPLO:
+
+<dataframe>.<ação>
+
+ val clienteDF = spark.read.json("cliente.json")
+scala> clienteDF.printSchema()
+
+scala> clienteDF.count()
+
+scala> clienteDF.first()
+
+scala> clienteDF.take(5)
+
+scala> clienteDF.show(5)
+
+scala> clienteDF.distinct()
+
+scala> clienteDF.collect() //Cuidado para estourar memória
+
+------------------------------------------------------------------------
+
+# DATAFRAME - SALVAR DADOS;
+
+dadosDF.write.
+
+save("arquivoParquet")
+
+json("arquivoJson")
+
+csv("arquivocsv")
+
+saveAsTable("tableHive")
+  - (/user/hive/warehouse)
+
+
+# EXEMPLO:
+
+scala> 
+dadosDF.write.save("outputData")
+
+hdfs>
+hdfs dfs -ls /user/hive/warehouse/outputData
+
+scala>
+dadosDF.write. mode("append").
+option("path","/user/root").
+saveAsTable("outputData")
+
+------------------------------------------------------------------------
+
+#DATAFRAME OPERAÇÕES;
+
+# Dados no Dataframe nunca são modificados;
+# são transformados:
+
+select : Selecionar os atributos
+where : Filtrar os atributos
+orderBy : Ordenar os dados por atributo
+groupBy : Agrupar os dados por atributo
+join : Mesclar Dados
+limit (n): Limitar a quantidade de registros
+
+
+# Agrupar(groupBy) com agragação:
+count()
+max()
+min()
+mean()
+sum()
+pivot()
+agg()
+
+scala> peopleDF.groupBy("setor").count()
+scala> peopleDF.show()
+
+
+# ACESSAR O ATRIBUTO DO DADO:
+"<atributo>"
+$"<atributo>"
+<dataframe>("<atributo>")
+
+scala> prodDF.select("nome","qtd").show()
+scala> prodDF.select($"nome", $"qtd" * 0,1).show()
+scala> prodDF.where(prodDF("nome").startsWith("A")).show()
+
+
+# TRANSFORMAÇÃO INDIVIDUAL:
+<dataframe>.<ação>
+
+
+# Sequencia de transformação:
+<dataframe>.<ação>.<ação>...
+
+#EXEMPLO:
+
+val val prodQtdDF = prodDF.select("nome,qtd")
+val qtd50DF = prodQtdDF.where("qtd >50")
+val qtd50ordDF = qtd50DF.orderBy(“nome”)
+qtd50ordDF.show()
+prodDF.select("nome",qtd).where("qtd>50").orderBy("nome")
+
+
+------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
